@@ -23,6 +23,15 @@ services:
     depends_on:
       db:
         condition: service_healthy
+  
+  tools:
+    image: mcr.microsoft.com/dotnet/sdk:10.0
+    profiles: ["tools"]
+    working_dir: /src/SchoolAdmission.Api
+    volumes:
+      - ./backend:/src
+      - nuget-cache:/root/.nuget/packages
 
 volumes:
   pgdata:
+  nuget-cache:

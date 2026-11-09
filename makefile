@@ -20,6 +20,10 @@ help:
 	@echo "  make db-shell      Open a SQL prompt inside the database"
 	@echo "  make reset         DELETE ALL DATA and start from scratch"
 	@echo ""
+	@echo "  make migration name=X   Create a new database migration (runs inside Docker)"
+	@echo "  make migration-remove   Delete the last migration (only if not yet applied)"
+	@echo ""
+
 
 start:
 	docker compose up --build -d
@@ -51,3 +55,10 @@ db-shell:
 reset:
 	docker compose down -v
 	docker compose up --build -d
+
+migration:
+	@test -n "$(name)" || (echo "Usage: make migration name=AddSomething" && exit 1)
+	docker compose run --rm tools sh -c "dotnet tool install --global dotnet-ef --version '10.0.*' && dotnet restore && /root/.dotnet/tools/dotnet-ef migrations add $(name) -o Data/Migrations"
+
+migration-remove:
+	docker compose run --rm tools sh -c "dotnet tool install --global dotnet-ef --version '10.0.*' && dotnet restore && /root/.dotnet/tools/dotnet-ef migrations remove"
