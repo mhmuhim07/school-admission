@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: admission
+      POSTGRES_PASSWORD: admission
+      POSTGRES_DB: admission
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admission -d admission"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    build: ./backend
+    environment:
+      ConnectionStrings__Default: "Host=db;Port=5432;Database=admission;Username=admission;Password=admission"
+      HOLD_DURATION_SECONDS: "600"
+    ports:
+      - "8880:8880"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
