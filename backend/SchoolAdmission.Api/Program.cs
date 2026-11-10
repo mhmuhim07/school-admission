@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SchoolAdmission.Api;
+using SchoolAdmission.Api.BackgroundJobs;
 using SchoolAdmission.Api.Data;
 using SchoolAdmission.Api.Endpoints;
 
@@ -13,6 +14,8 @@ builder.Services.AddDbContext<AdmissionDbContext>(o => o.UseNpgsql(connectionStr
 // R11: hold duration from HOLD_DURATION_SECONDS, default 600
 var seconds = int.TryParse(builder.Configuration["HOLD_DURATION_SECONDS"], out var s) && s > 0 ? s : 600;
 builder.Services.AddSingleton(new HoldSettings(TimeSpan.FromSeconds(seconds)));
+
+builder.Services.AddHostedService<HoldExpiryWorker>();
 
 var app = builder.Build();
 
