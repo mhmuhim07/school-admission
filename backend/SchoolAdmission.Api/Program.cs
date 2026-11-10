@@ -24,6 +24,5 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.MapGet("/", () => "Hello World!");
-app.MapClassEndpoints();
-
+app.MapEndpoints();
 app.Run();
