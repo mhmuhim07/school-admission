@@ -32,6 +32,17 @@ services:
       - ./backend:/src
       - nuget-cache:/root/.nuget/packages
 
+  tests:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.tests
+    profiles: ["tests"]
+    environment:
+      ConnectionStrings__Default: "Host=db;Port=5432;Database=admission_test;Username=admission;Password=admission"
+    depends_on:
+      db:
+        condition: service_healthy
+
 volumes:
   pgdata:
   nuget-cache:

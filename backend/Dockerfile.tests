@@ -1,0 +1,7 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0
+WORKDIR /src
+COPY SchoolAdmission.Api/*.csproj SchoolAdmission.Api/
+COPY SchoolAdmission.Api.Tests/*.csproj SchoolAdmission.Api.Tests/
+RUN dotnet restore SchoolAdmission.Api.Tests/SchoolAdmission.Api.Tests.csproj
+COPY . .
+CMD ["dotnet", "test", "SchoolAdmission.Api.Tests/SchoolAdmission.Api.Tests.csproj", "--logger", "console;verbosity=normal"]

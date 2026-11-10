@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help start stop down restart status logs logs-backend rebuild db-shell reset migration migration-remove
+.PHONY: help start stop down restart status logs logs-backend rebuild db-shell reset migration migration-remove test
 
 # Service to rebuild (override like this: make rebuild s=frontend)
 s ?= backend
@@ -22,6 +22,8 @@ help:
 	@echo ""
 	@echo "  make migration name=X   Create a new database migration (runs inside Docker)"
 	@echo "  make migration-remove   Delete the last migration (only if not yet applied)"
+	@echo ""
+	@echo "  make test          Run the backend tests"
 	@echo ""
 
 
@@ -62,3 +64,6 @@ migration:
 
 migration-remove:
 	docker compose run --rm tools sh -c "dotnet tool install --global dotnet-ef --version '10.0.*' && dotnet restore && /root/.dotnet/tools/dotnet-ef migrations remove"
+
+test:
+	docker compose run --rm --build tests
