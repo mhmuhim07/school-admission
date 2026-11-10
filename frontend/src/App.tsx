@@ -1,12 +1,14 @@
 import { StudentProvider } from "./context/StudentContext";
 import { StudentIdentityBar } from "./components/StudentIdentityBar";
+import { ClassList } from "./components/ClassList";
 
 export default function App() {
   return (
     <StudentProvider>
-      <div style={{ minHeight: "100vh", backgroundColor: "#f3f4f6", fontFamily: "system-ui, -apple-system, sans-serif" }}>
+      <div className="app-shell">
         <StudentIdentityBar />
-        <main style={{ maxWidth: "1100px", margin: "24px auto", padding: "0 24px" }}>
+        <main className="container-main">
+          <ClassList />
         </main>
       </div>
     </StudentProvider>
