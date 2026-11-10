@@ -5,9 +5,10 @@ import { useStudent } from "../context/StudentContext";
 
 interface ClassListProps {
   onApplySuccess?: (newHold: Hold) => void;
+  refreshTrigger?: number;
 }
 
-export const ClassList: React.FC<ClassListProps> = ({ onApplySuccess }) => {
+export const ClassList: React.FC<ClassListProps> = ({ onApplySuccess, refreshTrigger }) => {
   const { studentId, isValid } = useStudent();
   const [classes, setClasses] = useState<SchoolClass[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -48,7 +49,7 @@ export const ClassList: React.FC<ClassListProps> = ({ onApplySuccess }) => {
       isMountedRef.current = false;
       clearInterval(interval);
     };
-  }, [fetchClasses]);
+  }, [fetchClasses, refreshTrigger]);
 
   const handleApply = async (cls: SchoolClass) => {
     setErrorMessage(null);
