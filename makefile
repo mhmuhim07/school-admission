@@ -2,7 +2,7 @@
 .PHONY: help start stop down restart status logs logs-backend rebuild db-shell reset migration migration-remove test
 
 # Service to rebuild (override like this: make rebuild s=frontend)
-s ?= backend
+s ?= frontend
 
 help:
 	@echo ""
@@ -29,7 +29,7 @@ help:
 
 start:
 	docker compose up --build -d
-	@echo "Started. Backend: http://localhost:8880"
+	@echo "Started. App: http://localhost:3000   API: http://localhost:8880"
 
 stop:
 	docker compose stop

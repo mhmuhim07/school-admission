@@ -26,7 +26,12 @@ builder.Services.AddSingleton(new HoldSettings(TimeSpan.FromSeconds(seconds)));
 
 builder.Services.AddHostedService<HoldExpiryWorker>();
 
+builder.Services.AddCors(o => o.AddDefaultPolicy(p =>
+    p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+
 var app = builder.Build();
+
+app.UseCors();
 
 // R5/R15: create or update the schema automatically on startup
 using (var scope = app.Services.CreateScope())
