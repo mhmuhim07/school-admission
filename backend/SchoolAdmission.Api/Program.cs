@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SchoolAdmission.Api;
 using SchoolAdmission.Api.Data;
+using SchoolAdmission.Api.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,5 +24,6 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.MapGet("/", () => "Hello World!");
+app.MapClassEndpoints();
 
 app.Run();

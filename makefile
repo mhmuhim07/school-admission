@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help start stop down restart status logs logs-backend rebuild db-shell reset
+.PHONY: help start stop down restart status logs logs-backend rebuild db-shell reset migration migration-remove
 
 # Service to rebuild (override like this: make rebuild s=frontend)
 s ?= backend
