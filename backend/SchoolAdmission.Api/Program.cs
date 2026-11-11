@@ -4,6 +4,7 @@ using SchoolAdmission.Api;
 using SchoolAdmission.Api.BackgroundJobs;
 using SchoolAdmission.Api.Data;
 using SchoolAdmission.Api.Endpoints;
+using SchoolAdmission.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,9 @@ builder.Services.AddHostedService<HoldExpiryWorker>();
 
 builder.Services.AddCors(o => o.AddDefaultPolicy(p =>
     p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+
+builder.Services.AddScoped<IClassService, ClassService>();
+builder.Services.AddScoped<IHoldService, HoldService>();
 
 var app = builder.Build();
 
