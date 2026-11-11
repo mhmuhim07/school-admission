@@ -34,7 +34,7 @@ All core architectural decisions, data modeling, concurrency strategies, and bus
 
 ### 1. In-Memory Locking vs. Multi-Instance Concurrency
 * **Mistake:** The AI initially proposed application-level memory locks (such as C# `lock` statements or `SemaphoreSlim`) to prevent over-allocation.
-* **How It Was Caught:** During architecture review, I noted that application-level in-memory locking breaks as soon as multiple backend containers/processes run against the same database (as required by bonus §1.6).
+* **How It Was Caught:** During architecture review, I noted that application-level in-memory locking breaks as soon as multiple backend containers/processes run against the same database.
 * **Correction:** Replaced in-memory locks with PostgreSQL row-level locks (`SELECT * FROM classes WHERE "Id" = @id FOR UPDATE`) inside database transactions, supplemented by a partial unique index on active holds.
 
 ### 2. Client vs. Containerized Dependency Confusion

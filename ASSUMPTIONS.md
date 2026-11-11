@@ -4,7 +4,7 @@ This document outlines the architectural assumptions and design decisions made f
 
 ---
 
-## 1. Concurrency Guarantee Across Multiple Backend Instances (Bonus §1.6)
+## 1. Concurrency Guarantee Across Multiple Backend Instances
 
 > **Requirement:** Even if two or more backend processes run simultaneously on different ports using the same database, `held + confirmed` count will never exceed `totalSeats`.
 
